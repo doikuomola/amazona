@@ -2,7 +2,7 @@ import React, { useEffect, useReducer } from 'react';
 import axios from 'axios';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { Product } from '../components';
+import { LoadingBox, MessageBox, Product } from '../components';
 import { Helmet } from 'react-helmet-async';
 
 const reducer = (state, action) => {
@@ -51,9 +51,9 @@ export default function HomeScreen() {
       <h1>Featured Products</h1>
       <div className="products">
         {loading ? (
-          <div>Loading...</div>
+          <LoadingBox />
         ) : error ? (
-          <div>{error}</div>
+          <MessageBox variant="danger">{error}</MessageBox>
         ) : (
           <Row>
             {products.map((product) => (
