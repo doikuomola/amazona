@@ -24,3 +24,7 @@ main {
   color: #000;
   border: none;
 }
+
+.img-large {
+  width: 100%;
+}
