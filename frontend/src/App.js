@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { HomeScreen, ProductScreen } from './screens';
+import { CartScreen, HomeScreen, ProductScreen } from './screens';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
@@ -39,6 +39,7 @@ function App() {
           <Container className="mt-3">
             <Routes>
               <Route path="/" element={<HomeScreen />} />
+              <Route path="/cart" element={<CartScreen />} />
               <Route path={`/product/:slug`} element={<ProductScreen />} />
             </Routes>
           </Container>
