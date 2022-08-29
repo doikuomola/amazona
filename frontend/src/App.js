@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import {
   CartScreen,
   HomeScreen,
+  PaymentMethodScreen,
   ProductScreen,
   ShippingAddress,
   SigninScreen,
@@ -81,6 +82,7 @@ function App() {
               <Route path="/signin" element={<SigninScreen />} />
               <Route path="/signup" element={<SignUpScreen />} />
               <Route path="/shipping" element={<ShippingAddress />} />
+              <Route path="/payment" element={<PaymentMethodScreen />} />
               <Route path={`/product/:slug`} element={<ProductScreen />} />
             </Routes>
           </Container>
