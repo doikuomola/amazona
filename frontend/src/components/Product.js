@@ -7,7 +7,6 @@ import axios from 'axios';
 import { Store } from '../context/Store';
 
 export default function Product({ product }) {
-  console.log(product.countInStock);
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const {
     cart: { cartItems },
