@@ -38,7 +38,7 @@ export default function PaymentMethodScreen() {
       <CheckoutSteps step1 step2 step3 />
       <div className="container small-container">
         <h1>Payment Method</h1>
-        <Form>
+        <Form onSubmit={submitHandler}>
           <div className="mb-3">
             <Form.Check
               type="radio"
@@ -60,7 +60,9 @@ export default function PaymentMethodScreen() {
             />
           </div>
           <div className="mb-3">
-            <Button className="primary">Continue</Button>
+            <Button className="primary" type="submit">
+              Continue
+            </Button>
           </div>
         </Form>
       </div>

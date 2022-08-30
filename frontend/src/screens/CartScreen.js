@@ -117,6 +117,9 @@ export default function CartScreen() {
                     >
                       Proceed to Checkout
                     </Button>
+                    <div className="text-center my-3">
+                      <Link to="/">Continue Shopping</Link>
+                    </div>
                   </div>
                 </ListGroup.Item>
               </ListGroup>
