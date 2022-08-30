@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import {
   CartScreen,
   HomeScreen,
+  OrderScreen,
   PaymentMethodScreen,
   PlaceOrderScreen,
   ProductScreen,
@@ -29,6 +30,7 @@ function App() {
     localStorage.removeItem('userInfo');
     localStorage.removeItem('shippingAddress');
     localStorage.removeItem('paymentMethod');
+    window.location.href = '/signin';
   };
 
   return (
@@ -86,6 +88,7 @@ function App() {
               <Route path="/shipping" element={<ShippingAddress />} />
               <Route path="/payment" element={<PaymentMethodScreen />} />
               <Route path="/placeorder" element={<PlaceOrderScreen />} />
+              <Route path="/order/:id" element={<OrderScreen />}></Route>
               <Route path={`/product/:slug`} element={<ProductScreen />} />
             </Routes>
           </Container>
