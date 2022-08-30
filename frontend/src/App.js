@@ -3,6 +3,7 @@ import {
   CartScreen,
   HomeScreen,
   PaymentMethodScreen,
+  PlaceOrderScreen,
   ProductScreen,
   ShippingAddress,
   SigninScreen,
@@ -84,6 +85,7 @@ function App() {
               <Route path="/signup" element={<SignUpScreen />} />
               <Route path="/shipping" element={<ShippingAddress />} />
               <Route path="/payment" element={<PaymentMethodScreen />} />
+              <Route path="/placeorder" element={<PlaceOrderScreen />} />
               <Route path={`/product/:slug`} element={<ProductScreen />} />
             </Routes>
           </Container>
