@@ -5,6 +5,7 @@ import seedRouter from './routes/seedRoutes.js';
 import productRouter from './routes/productRoutes.js';
 import userRoutes from './routes/authRoutes.js';
 import orderRouter from './routes/orderRoutes.js';
+import path from 'path';
 
 const app = express();
 dotenv.config();
@@ -36,6 +37,12 @@ app.use('/api/seed', seedRouter);
 app.use('/api/products', productRouter);
 app.use('/api/orders', orderRouter);
 app.use('/api/users', userRoutes);
+
+const __dirname = path.resolve();
+app.use(express.static(path.join(__dirname, '/frontend/build')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/frontend/build/index.html'));
+});
 
 app.use((err, req, res, next) => {
   res.status(500).json({ message: err.message });
