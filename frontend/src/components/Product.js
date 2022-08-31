@@ -23,9 +23,9 @@ export default function Product({ product }) {
     ctxDispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity } });
   };
 
-  const removeItemHandler = async (item) => {
-    ctxDispatch({ type: 'CART_REMOVE_ITEM', payload: item });
-  };
+  // const removeItemHandler = async (item) => {
+  //   ctxDispatch({ type: 'CART_REMOVE_ITEM', payload: item });
+  // };
   return (
     <Card>
       <Link to={`/product/${product.slug}`}>

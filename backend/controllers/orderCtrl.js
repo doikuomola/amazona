@@ -75,7 +75,10 @@ const orderCtrl = {
       res.status(404).send({ message: 'Order Not Found' });
     }
   }),
+  mine: expressAsyncHandler(async (req, res) => {
+    const orders = await Order.find({ user: req.user._id });
+    res.send(orders);
+  }),
 };
 
 export default orderCtrl;
-

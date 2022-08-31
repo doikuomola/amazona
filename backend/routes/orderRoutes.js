@@ -4,6 +4,7 @@ import { isAuth } from '../utils/utils.js';
 
 const orderRouter = express.Router();
 
+orderRouter.get('/mine', isAuth, orderCtrl.mine);
 orderRouter.post('/', isAuth, orderCtrl.createOrder);
 orderRouter.get('/:id', isAuth, orderCtrl.getOrder);
 

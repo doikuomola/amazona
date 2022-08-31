@@ -7,3 +7,4 @@ export { default as ShippingAddress } from './ShippingAddress';
 export { default as PaymentMethodScreen } from './PaymentMethodScreen';
 export { default as PlaceOrderScreen } from './PlaceOrderScreen';
 export { default as OrderScreen } from './OrderScreen';
+export { default as OrderHistoryScreen } from './OrderHistoryScreen';
