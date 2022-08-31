@@ -26,6 +26,10 @@ connectDb();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.get('/api/keys/paystack', (req, res) => {
+  res.send(process.env.PAYSTACK_PUBLIC_KEY || 'sb');
+});
+
 app.use('/api/seed', seedRouter);
 
 app.use('/api/products', productRouter);

@@ -14,6 +14,8 @@ import MessageBox from '../components/MessageBox';
 import toast from 'react-hot-toast';
 import { Store } from '../context/Store';
 import { getError } from '../utils/error';
+import { usePaystackPayment } from 'react-paystack';
+import { PaystackButton } from 'react-paystack';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -76,7 +78,7 @@ export default function OrderScreen() {
     loadingPay: false,
   });
 
-//   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
+  const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 
   function createOrder(data, actions) {
     return actions.order
@@ -145,30 +147,99 @@ export default function OrderScreen() {
         dispatch({ type: 'DELIVER_RESET' });
       }
     } else {
-    //   const loadPaypalScript = async () => {
-    //     const { data: clientId } = await axios.get('/api/keys/paypal', {
-    //       headers: { authorization: `Bearer ${userInfo.token}` },
-    //     });
-    //     paypalDispatch({
-    //       type: 'resetOptions',
-    //       value: {
-    //         'client-id': clientId,
-    //         currency: 'USD',
-    //       },
-    //     });
-    //     paypalDispatch({ type: 'setLoadingStatus', value: 'pending' });
-    //   };
-    //   loadPaypalScript();
+      const loadPaypalScript = async () => {
+        const { data: clientId } = await axios.get('/api/keys/paystack', {
+          headers: { authorization: `Bearer ${userInfo.token}` },
+        });
+
+        // paypalDispatch({
+        //   type: 'resetOptions',
+        //   value: {
+        //     'client-id': clientId,
+        //     currency: 'USD',
+        //   },
+        // });
+        paypalDispatch({ type: 'setLoadingStatus', value: 'pending' });
+      };
+      loadPaypalScript();
     }
   }, [
     order,
     userInfo,
     orderId,
     navigate,
-    // paypalDispatch,
+    paypalDispatch,
     successPay,
     successDeliver,
   ]);
+
+  const config = {
+    reference: new Date().getTime().toString(),
+    email: userInfo.email,
+    amount: order.totalPrice * 100,
+    publicKey: process.env.REACT_APP_PAYSTACK_PUBLIC_KEY,
+  };
+
+  // you can call this function anything
+  const handlePaystackSuccessAction = async (reference) => {
+    // Implementation for whatever you want to do with reference and after success call.
+    try {
+      dispatch({ type: 'PAY_REQUEST' });
+      const { data } = await axios.put(
+        `/api/orders/${order._id}/pay`,
+        reference,
+        {
+          headers: { authorization: `Bearer ${userInfo.token}` },
+        }
+      );
+      dispatch({ type: 'PAY_SUCCESS', payload: data });
+      toast.success('Order is paid');
+    } catch (err) {
+      dispatch({ type: 'PAY_FAIL', payload: getError(err) });
+      toast.error(getError(err));
+    }
+    console.log(reference);
+  };
+
+  // you can call this function anything
+  const handlePaystackCloseAction = () => {
+    // implementation for  whatever you want to do when the Paystack dialog closed.
+    console.log('closed');
+  };
+
+  const componentProps = {
+    ...config,
+    text: 'Paystack Payment',
+    onSuccess: (reference) => handlePaystackSuccessAction(reference),
+    onClose: handlePaystackCloseAction,
+  };
+
+  // you can call this function anything
+  const onSuccess = (reference) => {
+    // Implementation for whatever you want to do with reference and after success call.
+    console.log(reference);
+  };
+
+  // you can call this function anything
+  const onClose = () => {
+    // implementation for  whatever you want to do when the Paystack dialog closed.
+    console.log('closed');
+  };
+
+  const PaystackHookExample = () => {
+    const initializePayment = usePaystackPayment(config);
+    return (
+      <div>
+        <button
+          onClick={() => {
+            initializePayment(onSuccess, onClose);
+          }}
+        >
+          Paystack Payment
+        </button>
+      </div>
+    );
+  };
 
   return loading ? (
     <LoadingBox></LoadingBox>
@@ -244,7 +315,7 @@ export default function OrderScreen() {
                       <Col md={3}>
                         <span>{item.quantity}</span>
                       </Col>
-                      <Col md={3}>${item.price}</Col>
+                      <Col md={3}>&#8358;{item.price}</Col>
                     </Row>
                   </ListGroup.Item>
                 ))}
@@ -260,19 +331,19 @@ export default function OrderScreen() {
                 <ListGroup.Item>
                   <Row>
                     <Col>Items</Col>
-                    <Col>${order.itemsPrice.toFixed(2)}</Col>
+                    <Col>&#8358;{order.itemsPrice.toFixed(2)}</Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Row>
                     <Col>Shipping</Col>
-                    <Col>${order.shippingPrice.toFixed(2)}</Col>
+                    <Col>&#8358;{order.shippingPrice.toFixed(2)}</Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Row>
                     <Col>Tax</Col>
-                    <Col>${order.taxPrice.toFixed(2)}</Col>
+                    <Col>&#8358;{order.taxPrice.toFixed(2)}</Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>
@@ -281,36 +352,40 @@ export default function OrderScreen() {
                       <strong> Order Total</strong>
                     </Col>
                     <Col>
-                      <strong>${order.totalPrice.toFixed(2)}</strong>
+                      <strong>&#8358;{order.totalPrice.toFixed(2)}</strong>
                     </Col>
                   </Row>
                 </ListGroup.Item>
-                {/* {!order.isPaid && (
+                {!order.isPaid && (
                   <ListGroup.Item>
                     {isPending ? (
                       <LoadingBox />
                     ) : (
                       <div>
-                        <PayPalButtons
+                        <PaystackButton {...componentProps} />
+                        {/* <PayPalButtons
                           createOrder={createOrder}
                           onApprove={onApprove}
                           onError={onError}
-                        ></PayPalButtons>
+                        ></PayPalButtons> */}
                       </div>
                     )}
                     {loadingPay && <LoadingBox></LoadingBox>}
                   </ListGroup.Item>
-                )} */}
-                {/* {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                )}
+                {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
                   <ListGroup.Item>
                     {loadingDeliver && <LoadingBox></LoadingBox>}
                     <div className="d-grid">
-                      <Button type="button" onClick={deliverOrderHandler}>
+                      <Button
+                        type="button"
+                        // onClick={deliverOrderHandler}
+                      >
                         Deliver Order
                       </Button>
                     </div>
                   </ListGroup.Item>
-                )} */}
+                )}
               </ListGroup>
             </Card.Body>
           </Card>
