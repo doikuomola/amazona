@@ -30,6 +30,7 @@ app.get('/api/keys/paystack', (req, res) => {
   res.send(process.env.PAYSTACK_PUBLIC_KEY || 'sb');
 });
 
+// http://localhost:5000/api/seed
 app.use('/api/seed', seedRouter);
 
 app.use('/api/products', productRouter);
