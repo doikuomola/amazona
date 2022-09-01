@@ -8,6 +8,7 @@ import {
   PlaceOrderScreen,
   ProductScreen,
   ProfileScreen,
+  SearchScreen,
   ShippingAddress,
   SigninScreen,
   SignUpScreen,
@@ -174,6 +175,7 @@ function App() {
               <Route path="/cart" element={<CartScreen />} />
               <Route path="/signin" element={<SigninScreen />} />
               <Route path="/signup" element={<SignUpScreen />} />
+              <Route path="/search" element={<SearchScreen />} />
               <Route path="/profile" element={<ProfileScreen />} />
               <Route path="/shipping" element={<ShippingAddress />} />
               <Route path="/payment" element={<PaymentMethodScreen />} />

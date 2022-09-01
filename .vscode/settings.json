@@ -5,6 +5,7 @@
     "orderhistory",
     "PAYSTACK",
     "placeorder",
-    "SIGNOUT"
+    "SIGNOUT",
+    "toprated"
   ]
 }

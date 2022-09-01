@@ -9,3 +9,4 @@ export { default as PlaceOrderScreen } from './PlaceOrderScreen';
 export { default as OrderScreen } from './OrderScreen';
 export { default as OrderHistoryScreen } from './OrderHistoryScreen';
 export { default as ProfileScreen } from './ProfileScreen';
+export { default as SearchScreen } from './SearchScreen';
