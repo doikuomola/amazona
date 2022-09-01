@@ -6,6 +6,7 @@ import { Store } from '../context/Store';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { getError } from '../utils/error';
+import { LoadingBox } from '../components';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -91,6 +92,7 @@ export default function ProfileScreen() {
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
@@ -98,12 +100,14 @@ export default function ProfileScreen() {
           <Form.Label>Confirm Password</Form.Label>
           <Form.Control
             type="password"
+            value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </Form.Group>
         <div className="mb-3">
           <Button type="submit">Update</Button>
         </div>
+        {loadingUpdate && <LoadingBox></LoadingBox>}
       </form>
     </div>
   );

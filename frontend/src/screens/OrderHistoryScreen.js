@@ -32,8 +32,6 @@ export default function OrderHistoryScreen() {
     error: '',
   });
 
-  console.log(orders);
-
   useEffect(() => {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_REQUEST' });

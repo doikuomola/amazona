@@ -1,4 +1,5 @@
 import Product from '../models/productModel.js';
+import expressAsyncHandler from 'express-async-handler';
 
 const productCtrl = {
   getAllProducts: async (req, res) => {
@@ -31,6 +32,10 @@ const productCtrl = {
       }
     } catch (error) {}
   },
+  getCategories: expressAsyncHandler(async (req, res) => {
+    const categories = await Product.find().distinct('category');
+    res.send(categories);
+  }),
 };
 
 export default productCtrl;
