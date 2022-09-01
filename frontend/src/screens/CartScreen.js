@@ -81,7 +81,7 @@ export default function CartScreen() {
                         <i className="fas fa-plus-circle" />
                       </Button>
                     </Col>
-                    <Col>&#8358;{item.price}</Col>
+                    <Col>&#8358;{item.price.toLocaleString('en-US')}</Col>
                     <Col>
                       <Button
                         variant="light"
@@ -104,7 +104,9 @@ export default function CartScreen() {
                   <h3>
                     Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}
                     items) : &#8358;
-                    {cartItems.reduce((a, c) => a + c.price * c.quantity, 0)}
+                    {cartItems
+                      .reduce((a, c) => a + c.price * c.quantity, 0)
+                      .toLocaleString('en-US')}
                   </h3>
                 </ListGroup.Item>
                 <ListGroup.Item>

@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import {
   CartScreen,
+  DashboardScreen,
   HomeScreen,
   OrderHistoryScreen,
   OrderScreen,
@@ -26,7 +27,13 @@ import toast, { Toaster } from 'react-hot-toast';
 import Button from 'react-bootstrap/esm/Button';
 import { getError } from './utils/error';
 import axios from 'axios';
-import { LoadingBox, MessageBox, SearchBox } from './components';
+import {
+  AdminRoute,
+  LoadingBox,
+  MessageBox,
+  ProtectedRoutes,
+  SearchBox,
+} from './components';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -134,6 +141,22 @@ function App() {
                       Sign In
                     </Link>
                   )}
+                  {userInfo && userInfo.isAdmin && (
+                    <NavDropdown title="Admin" id="admin-nav-dropdown">
+                      <LinkContainer to="/admin/dashboard">
+                        <NavDropdown.Item>Dashboard</NavDropdown.Item>
+                      </LinkContainer>
+                      <LinkContainer to="/admin/products">
+                        <NavDropdown.Item>Products</NavDropdown.Item>
+                      </LinkContainer>
+                      <LinkContainer to="/admin/orders">
+                        <NavDropdown.Item>Orders</NavDropdown.Item>
+                      </LinkContainer>
+                      <LinkContainer to="/admin/users">
+                        <NavDropdown.Item>Users</NavDropdown.Item>
+                      </LinkContainer>
+                    </NavDropdown>
+                  )}
                 </Nav>
               </Navbar.Collapse>
             </Container>
@@ -176,12 +199,41 @@ function App() {
               <Route path="/signin" element={<SigninScreen />} />
               <Route path="/signup" element={<SignUpScreen />} />
               <Route path="/search" element={<SearchScreen />} />
-              <Route path="/profile" element={<ProfileScreen />} />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoutes>
+                    <ProfileScreen />
+                  </ProtectedRoutes>
+                }
+              />
               <Route path="/shipping" element={<ShippingAddress />} />
               <Route path="/payment" element={<PaymentMethodScreen />} />
               <Route path="/placeorder" element={<PlaceOrderScreen />} />
-              <Route path="/orderhistory" element={<OrderHistoryScreen />} />
-              <Route path="/order/:id" element={<OrderScreen />}></Route>
+              <Route
+                path="/admin/dashboard"
+                element={
+                  <AdminRoute>
+                    <DashboardScreen />
+                  </AdminRoute>
+                }
+              ></Route>
+              <Route
+                path="/orderhistory"
+                element={
+                  <ProtectedRoutes>
+                    <OrderHistoryScreen />
+                  </ProtectedRoutes>
+                }
+              />
+              <Route
+                path="/order/:id"
+                element={
+                  <ProtectedRoutes>
+                    <OrderScreen />
+                  </ProtectedRoutes>
+                }
+              ></Route>
               <Route path={`/product/:slug`} element={<ProductScreen />} />
             </Routes>
           </Container>

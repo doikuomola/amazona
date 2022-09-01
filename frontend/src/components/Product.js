@@ -37,7 +37,7 @@ export default function Product({ product }) {
         </Link>
         <Rating rating={product.rating} numReviews={product.numReviews} />
         <Card.Text>
-          <strong>&#8358; {product.price}</strong>
+          <strong>&#8358; {product.price.toLocaleString('en-US')}</strong>
         </Card.Text>
         {product.countInStock === 0 ? (
           <Button variant="light" disabled>

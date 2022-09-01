@@ -54,7 +54,7 @@ export default function ProductScreen() {
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart } = state;
-  
+
   const addToCartHandler = async () => {
     const existItem = cart.cartItems.find((x) => x._id === product._id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
@@ -102,7 +102,10 @@ export default function ProductScreen() {
                   />
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  Price: <strong>&#8358; {product.price}</strong>
+                  Price:{' '}
+                  <strong>
+                    &#8358; {product.price.toLocaleString('en-US')}
+                  </strong>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <p>{product.description}</p>
@@ -117,7 +120,9 @@ export default function ProductScreen() {
                       <Row>
                         <Col>Price:</Col>
                         <Col>
-                          <strong>&#8358; {product.price}</strong>
+                          <strong>
+                            &#8358; {product.price.toLocaleString('en-US')}
+                          </strong>
                         </Col>
                       </Row>
                     </ListGroup.Item>

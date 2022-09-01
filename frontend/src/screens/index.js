@@ -10,3 +10,4 @@ export { default as OrderScreen } from './OrderScreen';
 export { default as OrderHistoryScreen } from './OrderHistoryScreen';
 export { default as ProfileScreen } from './ProfileScreen';
 export { default as SearchScreen } from './SearchScreen';
+export { default as DashboardScreen } from './DashboardScreen';

@@ -135,7 +135,9 @@ export default function PlaceOrderScreen() {
                         <Col md={3}>
                           <span>{item.quantity}</span>
                         </Col>
-                        <Col md={3}>${item.price}</Col>
+                        <Col md={3}>
+                          &#8358;{item.price.toLocaleString('en-US')}
+                        </Col>
                       </Row>
                     </ListGroup.Item>
                   ))}
@@ -153,19 +155,34 @@ export default function PlaceOrderScreen() {
                   <ListGroup.Item>
                     <Row>
                       <Col>Items</Col>
-                      <Col>&#8358;{cart.itemsPrice.toFixed(2)}</Col>
+                      <Col>
+                        &#8358;
+                        {cart.itemsPrice
+                          .toFixed(2)
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                      </Col>
                     </Row>
                   </ListGroup.Item>
                   <ListGroup.Item>
                     <Row>
                       <Col>Shipping</Col>
-                      <Col>&#8358;{cart.shippingPrice.toFixed(2)}</Col>
+                      <Col>
+                        &#8358;
+                        {cart.shippingPrice
+                          .toFixed(2)
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                      </Col>
                     </Row>
                   </ListGroup.Item>
                   <ListGroup.Item>
                     <Row>
                       <Col>Tax</Col>
-                      <Col>&#8358;{cart.taxPrice.toFixed(2)}</Col>
+                      <Col>
+                        &#8358;
+                        {cart.taxPrice
+                          .toFixed(2)
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                      </Col>
                     </Row>
                   </ListGroup.Item>
                   <ListGroup.Item>
@@ -174,7 +191,12 @@ export default function PlaceOrderScreen() {
                         <strong> Order Total</strong>
                       </Col>
                       <Col>
-                        <strong>&#8358; {cart.totalPrice.toFixed(2)}</strong>
+                        <strong>
+                          &#8358;{' '}
+                          {cart.totalPrice
+                            .toFixed(2)
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                        </strong>
                       </Col>
                     </Row>
                   </ListGroup.Item>
