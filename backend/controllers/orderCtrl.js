@@ -122,6 +122,3 @@ const orderCtrl = {
 };
 
 export default orderCtrl;
-
-
-
